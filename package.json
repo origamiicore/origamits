@@ -1,6 +1,6 @@
 {
   "name": "origamits",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -14,6 +14,11 @@
   "license": "ISC",
   "devDependencies": {
     "typescript": "^4.6.4"
+  },
+  
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/origamiicore/origamits"
   },
   "dependencies": {
     "@types/node": "^17.0.31",

@@ -1,0 +1,22 @@
+{
+  "name": "origamits",
+  "version": "0.1.4",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx tsc",
+    "publish": "npm publish",
+    "run-sample": "node ./dist/sample/sample.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "@types/node": "^17.0.31",
+    "reflect-metadata": "^0.1.13"
+  }
+}

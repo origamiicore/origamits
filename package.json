@@ -1,6 +1,6 @@
 {
   "name": "origamits",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "publish": "npm publish",
     "run-sample": "node ./dist/sample/sample.js"
   },
-  "keywords": [],
+  "keywords": ["typescript" ,"origamicore"],
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -20,6 +20,7 @@
     "type": "git",
     "url": "https://github.com/origamiicore/origamits"
   },
+  "homepage": "https://origamicore.com",
   "dependencies": {
     "@types/node": "^17.0.31",
     "reflect-metadata": "^0.1.13"

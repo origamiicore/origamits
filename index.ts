@@ -7,7 +7,7 @@ import OriInjectable, { DataInput, OriModel, OriProps, OriService, SessionInput 
 import IOriModel from './src/decorators/validation/iOriModel';
 import MessageModel from './src/models/messageModel';
 import ConfigModel from './src/models/configModel';
-import RouteResponse from './src/models/routeResponse';
+import RouteResponse, { AddedResponse, ResponseDataModel, ResponseErrorModel } from './src/models/routeResponse';
 export {
 	ModuleConfig,
 	ConfigModel,
@@ -21,6 +21,9 @@ export {
 	IOriModel,
 	MessageModel,
 	OriModel,
-	RouteResponse
+	RouteResponse,
+	ResponseDataModel,
+	ResponseErrorModel,
+	AddedResponse
 }
 export default OrigamiTs

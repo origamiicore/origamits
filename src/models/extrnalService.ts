@@ -3,6 +3,7 @@ import { DefaultFunction } from "./defaultFunction";
 
 export default class ExtrnalService
 {
+    parent:any;
     functionName:string;
     function:Function ; 
     isPublic:boolean=true; 
@@ -17,6 +18,7 @@ export default class ExtrnalService
             roles?: number[]  
             args?: ArgModel[]  
             maxUploadSize?:number
+            parent?:any
         }) {
         if (fields) Object.assign(this, fields);
     }

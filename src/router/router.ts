@@ -37,6 +37,7 @@ export default class Router
     { 
       let serviceOption=service.services[defsrv] as InternalService;
       serviceOption.function=index[serviceOption.functionName]
+      serviceOption.parent=index;
     }
     for(var srv in service.externalServices)
     {  
@@ -74,7 +75,8 @@ export default class Router
       data.push(dt);
 
     }
-    var res = s.function(...data) 
+    data.push(s.parent)
+    var res = s.parent[s.functionName](...data)  
     return res;
   }
   static async runExternal(domain:string ,service:string ,message:MessageModel ):Promise<RouteResponse>
@@ -106,7 +108,8 @@ export default class Router
       data.push(dt);
 
     }
-    var res = s.function(...data) 
+    data.push(s.parent)
+    var res = s.parent[s.functionName](...data)  
     return res;
   }
 }

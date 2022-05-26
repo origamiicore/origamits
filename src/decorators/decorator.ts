@@ -135,7 +135,7 @@ export function OriProps(fields?: {
             throw 'you can\'t use $ori ';
         }
         const getter = function() {
-        return value;
+            return  this.$oriValues[value];
         };
         const setter = function(newVal: any) { 
             var model=this as IOriModel; 
@@ -158,7 +158,7 @@ export function OriProps(fields?: {
             }
             else {
                 model.$oriSetValiadte(propertyKey,'') 
-                value = newVal;
+                this.$oriValues[value] = newVal;
             }      
         }; 
         Object.defineProperty(target, propertyKey, {

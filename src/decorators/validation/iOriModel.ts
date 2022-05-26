@@ -2,6 +2,7 @@ import ErrorDataModel from "./errorDataModel";
 
 export default class IOriModel
 {
+    $oriValues:any={};
     $oriIsValidate:boolean=true;
     $oriJSonProps:any={};
     $oriErrorData:ErrorDataModel[]=[]; 
@@ -28,7 +29,7 @@ export default class IOriModel
     }
     toJSON()
     {
-        var ignore=['$oriIsValidate','$oriJSonProps','$oriErrorData']
+        var ignore=['$oriIsValidate','$oriJSonProps','$oriErrorData','$oriValues']
         var copy:any={};
         for(let prop in this)
         {

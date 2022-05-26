@@ -129,13 +129,12 @@ export function OriProps(fields?: {
   })
 {
     return function(target: Object, propertyKey: string) { 
-        let value : string;
         if(propertyKey.indexOf('$ori')==0)
         {
             throw 'you can\'t use $ori ';
         }
         const getter = function() {
-            return  this.$oriValues[value];
+            return  this.$oriValues[propertyKey];
         };
         const setter = function(newVal: any) { 
             var model=this as IOriModel; 
@@ -158,7 +157,7 @@ export function OriProps(fields?: {
             }
             else {
                 model.$oriSetValiadte(propertyKey,'') 
-                this.$oriValues[value] = newVal;
+                this.$oriValues[propertyKey] = newVal;
             }      
         }; 
         Object.defineProperty(target, propertyKey, {

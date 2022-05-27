@@ -1,5 +1,22 @@
-# Description
-The OrigamiCore Is Sipmle Framework For Small And Medium Projects.
+# TypeScript OrigamiCore
+## create own project easily
 
-# Documentation
-coming soon
+
+## Installation
+
+OrigamiTs requires [Node.js](https://nodejs.org/) v14+ to run.
+
+```sh
+npm install origamits
+```
+
+## Plugins
+
+OrigamiTs is currently extended with the following plugins.
+Instructions on how to use them in your own application are linked below.
+
+| Plugin | README |
+| ------ | ------ |
+| Endpoint(express) | [https://www.npmjs.com/package/tsoriendpoint][PlDb] | 
+| MongoDb | [https://www.npmjs.com/package/tsorimongo][PlDb] | 
+

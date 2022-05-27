@@ -17,6 +17,6 @@ Instructions on how to use them in your own application are linked below.
 
 | Plugin | README |
 | ------ | ------ |
-| Endpoint(express) | [https://www.npmjs.com/package/tsoriendpoint][PlDb] | 
-| MongoDb | [https://www.npmjs.com/package/tsorimongo][PlDb] | 
+| Endpoint(express) | [https://www.npmjs.com/package/tsoriendpoint] | 
+| MongoDb | [https://www.npmjs.com/package/tsorimongo] | 
 

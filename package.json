@@ -1,6 +1,6 @@
 {
   "name": "origamits",
-  "version": "0.1.12",
+  "version": "0.1.14",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -9,7 +9,7 @@
     "publish": "npm publish",
     "run-sample": "node ./dist/sample/sample.js"
   },
-  "keywords": ["typescript" ,"origamicore"],
+  "keywords": ["typescript" ,"origamicore","framework"],
   "author": "",
   "license": "ISC",
   "devDependencies": {

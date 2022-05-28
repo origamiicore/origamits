@@ -59,5 +59,18 @@ export default class RouteResponse
       }) {
       if (fields) Object.assign(this, fields);
   }
+  static success(data:any):RouteResponse
+  {
+    return new RouteResponse({response:new ResponseDataModel({
+      isDone:true,
+      data, 
+    })});
+  }
+  static failed(data:any,message:string,code:string):RouteResponse
+  {
+    return new RouteResponse({
+      error:new ResponseErrorModel({data,message,code})
+    });
+  }
 
 }

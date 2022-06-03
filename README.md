@@ -17,7 +17,7 @@ Instructions on how to use them in your own application are linked below.
 
 | Plugin | README |
 | ------ | ------ |
-| Endpoint(express) | [https://www.npmjs.com/package/tsoriendpoint] | 
+| Endpoint(express,socket) | [https://www.npmjs.com/package/tsoriendpoint] | 
 | MongoDb | [https://www.npmjs.com/package/tsorimongo] | 
 | Redis | [https://www.npmjs.com/package/tsoriredis] | 
 

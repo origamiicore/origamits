@@ -1,11 +1,17 @@
 import ErrorDataModel from "./errorDataModel";
+import ExtraData from "./extraData";
 
 export default class IOriModel
 {
+    $oriExtraData:ExtraData;
     $oriValues:any={};
     $oriIsValidate:boolean=true;
     $oriJSonProps:any={};
-    $oriErrorData:ErrorDataModel[]=[]; 
+    $oriErrorData:ErrorDataModel[]=[];  
+    constructor()
+    {  
+        if(this.$oriExtraData)this.$oriExtraData.setParent(this);          
+    }
     $oriSetValiadte(key:string,error:string)
     { 
         //if(!this.$oriErrorData)this.$oriErrorData=[];
@@ -29,7 +35,7 @@ export default class IOriModel
     }
     toJSON()
     {
-        var ignore=['$oriIsValidate','$oriJSonProps','$oriErrorData','$oriValues']
+        var ignore=['$oriIsValidate','$oriJSonProps','$oriErrorData','$oriValues','$oriExtraData']
         var copy:any={};
         for(let prop in this)
         {

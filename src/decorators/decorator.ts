@@ -3,6 +3,7 @@ import ExtrnalService from "../models/extrnalService";
 import InternalService from "../models/internalService";
 import Router from "../router/router";
 import Container, { FunctionModel, FunctionOption, ParamModel } from "./container"; 
+import ExtraData from "./validation/extraData";
 import IOriModel from "./validation/iOriModel";
 
 var container:Container=new Container();
@@ -119,6 +120,7 @@ export function OriModel(fields?: {
 
 export function OriProps(fields?: { 
     title?:string
+    tags?:string[]|string
     minLength?: number  
     minLengthError?:string
     maxLength?: number  
@@ -132,7 +134,29 @@ export function OriProps(fields?: {
         if(propertyKey.indexOf('$ori')==0)
         {
             throw 'you can\'t use $ori ';
+        } 
+        
+        if(fields.tags)
+        {
+
+            if(!target['$oriExtraData'])
+            {
+                target['$oriExtraData']=new ExtraData()
+            }
+            if(Array.isArray(fields.tags))
+            {
+                for(var tag of fields.tags)
+                {
+                    target['$oriExtraData'].addTag(tag,propertyKey) 
+                    
+                }
+            }
+            else
+            {
+                target['$oriExtraData'].addTag(fields.tags,propertyKey) 
+            }
         }
+        
         const getter = function() {
             return  this.$oriValues[propertyKey];
         };

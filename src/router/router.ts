@@ -43,6 +43,7 @@ export default class Router
     {  
       let serviceOption=service.externalServices[srv] as ExtrnalService;
       serviceOption.function=index[serviceOption.functionName];
+      serviceOption.parent=index;
     }
 
   }

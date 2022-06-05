@@ -20,4 +20,5 @@ Instructions on how to use them in your own application are linked below.
 | Endpoint(express,socket) | [https://www.npmjs.com/package/tsoriendpoint] | 
 | MongoDb | [https://www.npmjs.com/package/tsorimongo] | 
 | Redis | [https://www.npmjs.com/package/tsoriredis] | 
+| Captcha | [https://www.npmjs.com/package/tsoricaptcha] | 
 

@@ -1,52 +1,32 @@
+import ModelService from "../modelService";
 import ErrorDataModel from "./errorDataModel";
 import ExtraData from "./extraData";
 
 export default class IOriModel
 {
     $oriExtraData:ExtraData;
-    $oriValues:any={};
-    $oriIsValidate:boolean=true;
+    $oriValues:any={}; 
     $oriJSonProps:any={};
-    $oriErrorData:ErrorDataModel[]=[];  
     constructor()
     {  
+        if(!this.$oriExtraData)this.$oriExtraData=new ExtraData();
         if(this.$oriExtraData)this.$oriExtraData.setParent(this);          
-    }
-    $oriSetValiadte(key:string,error:string)
-    { 
-        //if(!this.$oriErrorData)this.$oriErrorData=[];
-        var index=this.$oriErrorData.map(p=> p.key).indexOf(key);
-        if(error)
-        {
-            if(index==-1)
-            {
-                this.$oriErrorData.push(new ErrorDataModel({key:key,resion:error}))
-            }
-            else
-            {
-                this.$oriErrorData[index].resion=error;
-            }
-        }
-        else
-        {
-            if(index>-1)this.$oriErrorData.splice(index,1);
-        }
-        this.$oriIsValidate=!this.$oriErrorData.length
     }
     toJSON()
     {
-        var ignore=['$oriIsValidate','$oriJSonProps','$oriErrorData','$oriValues','$oriExtraData']
+        var ignore=['$oriJSonProps','$oriValues','$oriExtraData']
         var copy:any={};
         for(let prop in this)
         {
             if(ignore.indexOf(prop)!=-1)continue;
             copy[prop]=this[prop]
         }         
-        for(let prop in this.$oriJSonProps)
+        var model=ModelService.getModel(this.constructor.name)
+        for(let prop of model.props)
         {
-            if(this.$oriJSonProps[prop])
+            if(!prop.ignoreToJson)
             {
-                copy[prop]=this[prop];
+                copy[prop.name]=this[prop.name];
             }
         } 
         return  copy;

@@ -1,3 +1,5 @@
+import ModelService, { ObjectModel } from "./modelService";
+
 export class ParamModel{
     index:number;
     type:'session'|'input';
@@ -62,5 +64,50 @@ export default class Container{
     {
         if(!this.functions[functionName])this.functions[functionName]=new FunctionModel({name:functionName});
         (this.functions[functionName] as FunctionModel).addParamData( param); 
+    }
+}
+
+
+export class ModelProps
+{
+    name:string
+    readOnly:string
+    title:string
+    tags:string[]|string
+    minLength: number  
+    minLengthError:string
+    maxLength: number  
+    maxLengthError:string
+    ignoreToJson:boolean
+    isRequired:boolean
+    isRequiredError:string
+    constructor(name:string,fields?: { 
+        readOnly?:string
+        title?:string
+        tags?:string[]|string
+        minLength?: number  
+        minLengthError?:string
+        maxLength?: number  
+        maxLengthError?:string
+        ignoreToJson?:boolean
+        isRequired?:boolean
+        isRequiredError?:string
+      })
+    {
+        this.name=name;
+        if(fields)Object.assign(this,fields)
+    }
+}
+export class ModelContainer
+{
+    static props:ModelProps[]=[];
+    static addProp(props:ModelProps)
+    {
+        this.props.push(props);
+    }
+    static addModel(className:string)
+    {
+        ModelService.models[className]=new ObjectModel({name:className,props:this.props}); 
+        this.props=[]
     }
 }

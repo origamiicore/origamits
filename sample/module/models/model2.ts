@@ -1,19 +1,20 @@
-import { OriProps,IOriModel } from "../../../"; 
-
+import { OriProps,IOriModel, OriModel } from "../../../"; 
+@OriModel()
 export default class Model2 extends IOriModel
 {
-    @OriProps({tags:'readonly'})
-    sex:string;
+    @OriProps({readOnly:'gender'})
+    _id:string; 
+    @OriProps({tags:'readonly',isRequired:true})
+    gender:string;
     constructor(
         fields?: {
-            sex?: string, 
+            gender?: string, 
         })
-    {
-        
+    { 
         super();  
         if (fields) 
         {
             Object.assign(this, fields); 
-        }
+        }  
     }
 }

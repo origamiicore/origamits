@@ -12,8 +12,9 @@ export default class SampleProject
     }
     async init()
     {
-        var model=new Model2({sex:'male'});
-        console.log('>>model',model.toJSON()); 
+        var model=new Model2({gender:'male'}); 
+        console.log('>>model',model.$oriExtraData.isValid()); 
+        console.log('>>model',model.toJSON());
         model.$oriExtraData.clearByTag('readonly');
         console.log('>>model',model.toJSON());
         
@@ -28,6 +29,9 @@ export default class SampleProject
         console.log('>>',JSON.parse(JSON.stringify(list)) );
         
         var data=await SampleRoute.RunTestService('vahid1xx','hoss','dd');
+        console.log(data);
+        
+        data=await SampleRoute.RunTestService('','hoss','dd');
         console.log(data);
         
 

@@ -2,7 +2,8 @@ import ArgModel from "../models/argModel";
 import ExtrnalService from "../models/extrnalService";
 import InternalService from "../models/internalService";
 import Router from "../router/router";
-import Container, { FunctionModel, FunctionOption, ParamModel } from "./container"; 
+import Container, { FunctionModel, FunctionOption, ModelContainer, ModelProps, ParamModel } from "./container"; 
+import ModelService from "./modelService";
 import ExtraData from "./validation/extraData";
 import IOriModel from "./validation/iOriModel";
 
@@ -112,13 +113,13 @@ export function OriModel(fields?: {
      
   }) {
     return function <T>(target: Type<T>) {
-        var myclass=new target();
-        
+        ModelContainer.addModel(target.name);
     };
   }
  
 
 export function OriProps(fields?: { 
+    readOnly?:string
     title?:string
     tags?:string[]|string
     minLength?: number  
@@ -135,6 +136,7 @@ export function OriProps(fields?: {
         {
             throw 'you can\'t use $ori ';
         } 
+        ModelContainer.addProp(new ModelProps(propertyKey,fields));
         
         if(fields.tags)
         {
@@ -155,34 +157,32 @@ export function OriProps(fields?: {
             {
                 target['$oriExtraData'].addTag(fields.tags,propertyKey) 
             }
+        } 
+        if(fields.readOnly)
+        {
+            Object.defineProperty(target, propertyKey, {
+                get: function() {
+                    return  this.$oriValues[fields.readOnly];
+                } 
+            }); 
+            return
         }
-        
         const getter = function() {
             return  this.$oriValues[propertyKey];
         };
-        const setter = function(newVal: any) { 
+        const setter = function(newVal: any) {  
+            var errors = ModelService.validate(this.constructor.name,propertyKey,newVal);
             var model=this as IOriModel; 
-            model.$oriJSonProps[propertyKey]=!fields?.ignoreToJson
-            if(fields?.isRequired && newVal==null)
+            for(var error of errors)
             {
-                var title=fields?.title??propertyKey;
-                var error=fields?.minLengthError??`${title} required`;
-                model.$oriSetValiadte(propertyKey,error) 
+                model.$oriExtraData.SetValiadte(propertyKey,error);
             }
-            else if(fields?.minLength!=null && (newVal??'').toString().length < fields?.minLength) {
-                var title=fields?.title??propertyKey;
-                var error=fields?.minLengthError??`${title} should be bigger than ${fields.minLength}`;
-                model.$oriSetValiadte(propertyKey,error)
-            }
-            else if(fields?.maxLength!=null && (newVal??'').toString().length < fields?.maxLength) {
-                var title=fields?.title??propertyKey;
-                var error=fields?.maxLengthError??`${title} should be lesser than ${fields.maxLength}`;
-                model.$oriSetValiadte(propertyKey,error)
-            }
-            else {
-                model.$oriSetValiadte(propertyKey,'') 
-                this.$oriValues[propertyKey] = newVal;
-            }      
+            
+            if(!errors.length)
+            {
+                model.$oriExtraData.SetValiadte(propertyKey,'') 
+                this.$oriValues[propertyKey] = newVal; 
+            } 
         }; 
         Object.defineProperty(target, propertyKey, {
             get: getter,

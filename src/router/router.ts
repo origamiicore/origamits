@@ -1,3 +1,4 @@
+import { IOriModel } from "../..";
 import ExtrnalService from "../models/extrnalService";
 import InternalService from "../models/internalService";
 import MessageModel from "../models/messageModel";
@@ -71,7 +72,17 @@ export default class Router
       }
       if(arg.type)
       {
+        
         dt=new (arg.type)(dt); 
+        if(dt instanceof IOriModel)
+        { 
+          var validate=  dt.$oriExtraData.isValid();  
+          if(validate!==true)
+          {
+            return RouteResponse.failed({error:validate,name:arg.name},'parameter validation',RouteErrorMessage.validationError)
+          }
+          
+        }
       }
       data.push(dt);
 
@@ -105,6 +116,15 @@ export default class Router
       if(arg.type)
       {
         dt=new (arg.type)(dt); 
+        if(dt instanceof IOriModel)
+        { 
+          var validate=  dt.$oriExtraData.isValid();
+          if(validate!==true)
+          {
+            return RouteResponse.failed({error:validate,name:arg.name},'parameter validation',RouteErrorMessage.validationError)
+          }
+          
+        }
       }
       data.push(dt);
 

@@ -25,7 +25,7 @@ class SampleIndex implements PackageIndex
         console.log('name>',this.name );
         console.log('info>',JSON.stringify(info) );
         // console.log('info>',info.$oriToJson() );
-        console.log('errors>',info.$oriErrorData);
+        console.log('errors>',info.$oriExtraData.isValid());
         console.log('addedData>',addedData);
 
     }

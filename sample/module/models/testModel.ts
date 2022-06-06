@@ -4,7 +4,7 @@ import Model2 from "./model2";
 @OriModel()
 export default class TestModel extends IOriModel
 {
-    @OriProps({minLength:5})
+    @OriProps({minLength:5,isRequired:true})
     fname:string;
     lname:string;
     other:Model2;

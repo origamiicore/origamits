@@ -97,8 +97,16 @@ export default class Router
 
     }
     data.push(s.parent)
-    var res = s.parent[s.functionName](...data)  
-    return res;
+    try{
+      var res =await  s.parent[s.functionName](...data) ;
+      if(res instanceof RouteResponse)
+      {
+        return res;
+      }
+      return RouteResponse.success(res);
+    }catch(exp){
+      return RouteResponse.failed(exp,exp.message,'')
+    }
   }
   static async runExternal(domain:string ,service:string ,message:MessageModel ):Promise<RouteResponse>
   { 
@@ -139,7 +147,15 @@ export default class Router
 
     }
     data.push(s.parent)
-    var res = s.parent[s.functionName](...data)  
-    return res;
+    try{
+      var res =await  s.parent[s.functionName](...data) ;
+      if(res instanceof RouteResponse)
+      {
+        return res;
+      }
+      return RouteResponse.success(res);
+    }catch(exp){
+      return RouteResponse.failed(exp,exp.message,'')
+    }
   }
 }

@@ -1,5 +1,6 @@
 import { IOriModel } from "../..";
 import ExtrnalService from "../models/extrnalService";
+import GlobalModels from "../models/globalModels";
 import InternalService from "../models/internalService";
 import MessageModel from "../models/messageModel";
 import PackageIndex from "../models/packageIndex";
@@ -8,32 +9,40 @@ import UploadModel from "../models/uploadModel";
 import RouteErrorMessage from "./routeErrorMessage"; 
 import RouteService from "./routeService";
 import UploadService from "./uploadService";
- 
+
+var globalModel:GlobalModels=new GlobalModels();
+if(global.origamits)
+{
+  globalModel=global.origamits as GlobalModels ;
+} 
+var routes = globalModel.routes; 
+
+
 export default class Router
 { 
-  static routes = new Map<String,RouteService>();  
+  //static routes = new Map<String,RouteService>();  
   static getRouteData(domain:string , service:string): ExtrnalService
   {
-    if(!this.routes[domain])return null;
-    var route=(this.routes[domain] as RouteService);
+    if(!routes[domain])return null;
+    var route=(routes[domain] as RouteService);
     if(!route.externalServices[service])return null;
     return route.externalServices[service] as ExtrnalService;
   } 
   static addExternalRoute(domain:string , service:string , data:ExtrnalService)
   {
-    if(!this.routes[domain])this.routes[domain]=new RouteService();
-    this.routes[domain].externalServices[service]=data; 
+    if(!routes[domain])routes[domain]=new RouteService();
+    routes[domain].externalServices[service]=data; 
   }
   static addInternalRoute(domain:string , service:string , data:InternalService)
   {
-    if(!this.routes[domain])this.routes[domain]=new RouteService();
-    this.routes[domain].services[service]=data;
+    if(!routes[domain])routes[domain]=new RouteService();
+    routes[domain].services[service]=data;
   }
   static setInstance(index:PackageIndex)
   {
     var domain=index.name;
-    if(!this.routes[domain])return null;
-    var service=this.routes[domain] as RouteService
+    if(!routes[domain])return null;
+    var service=routes[domain] as RouteService
     for(var defsrv in service.services)
     { 
       let serviceOption=service.services[defsrv] as InternalService;
@@ -51,15 +60,15 @@ export default class Router
   static async runInternal(domain:string ,service:string ,message:MessageModel ):Promise<RouteResponse>
   { 
     
-    if(domain==null || !this.routes[domain])
+    if(domain==null || !routes[domain])
     {
       return new RouteResponse({error: RouteErrorMessage.domainNotExist});
     }  
-    if( !this.routes[domain]?.services[service])
+    if( !routes[domain]?.services[service])
     {
       return new RouteResponse({error: RouteErrorMessage.serviceNotExist});
     }
-    var d=this.routes[domain] as RouteService;
+    var d=routes[domain] as RouteService;
     var s= d?.services[service] as InternalService;
     if(s==null) return new RouteResponse({error: RouteErrorMessage.serviceNotExist});
     var data:any[]=[];
@@ -94,15 +103,15 @@ export default class Router
   static async runExternal(domain:string ,service:string ,message:MessageModel ):Promise<RouteResponse>
   { 
     
-    if(domain==null || !this.routes[domain])
+    if(domain==null || !routes[domain])
     {
       return new RouteResponse({error: RouteErrorMessage.domainNotExist});
     }  
-    if( !this.routes[domain]?.externalServices[service])
+    if( !routes[domain]?.externalServices[service])
     {
       return new RouteResponse({error: RouteErrorMessage.serviceNotExist});
     }
-    var d=this.routes[domain] as RouteService;
+    var d=routes[domain] as RouteService;
     var s= d?.externalServices[service] as ExtrnalService;
     if(s==null) return new RouteResponse({error: RouteErrorMessage.serviceNotExist});
     var data:any[]=[];

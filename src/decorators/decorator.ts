@@ -138,7 +138,7 @@ export function OriProps(fields?: {
         } 
         ModelContainer.addProp(new ModelProps(propertyKey,fields));
         
-        if(fields.tags)
+        if(fields?.tags)
         {
 
             if(!target['$oriExtraData'])
@@ -158,7 +158,7 @@ export function OriProps(fields?: {
                 target['$oriExtraData'].addTag(fields.tags,propertyKey) 
             }
         } 
-        if(fields.readOnly)
+        if(fields?.readOnly)
         {
             Object.defineProperty(target, propertyKey, {
                 get: function() {

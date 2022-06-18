@@ -21,7 +21,7 @@ export default class ModelService
     }
     static validateObject(name:string,value:any):string[]|true
     {
-        var error=[]; 
+        var error:any[]=[]; 
         var model=this.models[name] as ObjectModel ;  
         
         if(!model)return [];
@@ -31,8 +31,7 @@ export default class ModelService
             if(prop.isRequired)
             {
                 var title=prop?.title??prop.name; 
-                if(val==null)error.push(`${title} required`);
-                if(typeof(val)=='string' && val==='')error.push(`${title} required`);
+                if(val==null || (typeof(val)=='string' && val===''))error.push({title,type:'required'} ); 
             }
             error.push(...this.vaidateProp(prop,val,prop.name))
         }
@@ -40,7 +39,7 @@ export default class ModelService
             return error;
         return true;
     }
-    static validate(name:string,propertyKey:string,newVal:any):string[]
+    static validate(name:string,propertyKey:string,newVal:any):any[]
     {
         var model=this.models.get(name) ;
         if(!model)return [];
@@ -48,21 +47,16 @@ export default class ModelService
         if(!field)return [];
         return this.vaidateProp(field,newVal,propertyKey);
     }
-    static vaidateProp(field:ModelProps,newVal:any,propertyKey:string):string[]
+    static vaidateProp(field:ModelProps,newVal:any,propertyKey:string):any[]
     {
         var error=[]; 
-        if(field?.isRequired && newVal==null)
-        {
+        if(field?.minLength!=null && (newVal??'').toString().length < field?.minLength) {
             var title=field?.title??propertyKey; 
-            error.push(field?.minLengthError??`${title} required`) 
+            error.push({title,type:'minLength'})
         }
-        else if(field?.minLength!=null && (newVal??'').toString().length < field?.minLength) {
-            var title=field?.title??propertyKey; 
-            error.push(field?.minLengthError??`${title} should be bigger than ${field.minLength}`)
-        }
-        else if(field?.maxLength!=null && (newVal??'').toString().length < field?.maxLength) {
+        else if(field?.maxLength!=null && (newVal??'').toString().length > field?.maxLength) {
             var title=field?.title??propertyKey;
-            error.push(field?.maxLengthError??`${title} should be lesser than ${field.maxLength}`)
+            error.push({title,typeof:'maxLength'})
         } 
         return error;
 

@@ -8,7 +8,7 @@ export class ParamModel{
     public constructor(
         fields?: { 
           index?: number
-          type?:'session'|'input'
+          type?:'session'|'input'|'odata'
           isRequired?: boolean
           classType?:any
         }) {
@@ -74,24 +74,18 @@ export class ModelProps
     readOnly:string
     title:string
     tags:string[]|string
-    minLength: number  
-    minLengthError:string
-    maxLength: number  
-    maxLengthError:string
+    minLength: number   
+    maxLength: number   
     ignoreToJson:boolean
-    isRequired:boolean
-    isRequiredError:string
+    isRequired:boolean 
     constructor(name:string,fields?: { 
         readOnly?:string
         title?:string
         tags?:string[]|string
-        minLength?: number  
-        minLengthError?:string
-        maxLength?: number  
-        maxLengthError?:string
+        minLength?: number   
+        maxLength?: number   
         ignoreToJson?:boolean
-        isRequired?:boolean
-        isRequiredError?:string
+        isRequired?:boolean 
       })
     {
         this.name=name;

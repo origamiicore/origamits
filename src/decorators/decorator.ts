@@ -8,6 +8,12 @@ import ExtraData from "./validation/extraData";
 import IOriModel from "./validation/iOriModel";
 
 var container:Container=new Container();
+export  function OdataInput (target: Object, propertyKey: string , parameterIndex: number) { 
+    container.addParamData(propertyKey,new ParamModel({
+        index:parameterIndex,
+        type:'odata'
+    })) 
+}
 export  function SessionInput (target: Object, propertyKey: string , parameterIndex: number) { 
     container.addParamData(propertyKey,new ParamModel({
         index:parameterIndex,
@@ -79,6 +85,7 @@ export default function OriInjectable(fields: {
             {
                 let pmodel=func.params[fparam] as ParamModel;
                 if(pmodel.type=='session')paramList[pmodel.index].isSession=true;
+                if(pmodel.type=='odata')paramList[pmodel.index].isOdata=true;
                 if(pmodel.classType)paramList[pmodel.index].type= pmodel.classType ; 
             }
             if(func.option.isInternal)

@@ -6,6 +6,7 @@ import MessageModel from "../models/messageModel";
 import PackageIndex from "../models/packageIndex";
 import RouteResponse from "../models/routeResponse";
 import UploadModel from "../models/uploadModel";
+import OdataModel from "./odataModel";
 import RouteErrorMessage from "./routeErrorMessage"; 
 import RouteService from "./routeService";
 import UploadService from "./uploadService";
@@ -129,6 +130,10 @@ export default class Router
       if(arg.isSession)
       {
         dt=message.session;
+      }
+      if(arg.isOdata)
+      {
+        dt=new OdataModel(dt) ;
       }
       if(arg.type)
       {

@@ -2,7 +2,7 @@ import ModelService, { ObjectModel } from "./modelService";
 
 export class ParamModel{
     index:number;
-    type:'session'|'input';
+    type:'session'|'input'|'odata';
     isRequired:boolean;
     classType:any=null;
     public constructor(

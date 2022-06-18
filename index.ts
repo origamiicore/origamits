@@ -8,6 +8,7 @@ import IOriModel from './src/decorators/validation/iOriModel';
 import MessageModel from './src/models/messageModel';
 import ConfigModel from './src/models/configModel';
 import RouteResponse, { AddedResponse, ResponseDataModel, ResponseErrorModel } from './src/models/routeResponse';
+import OdataModel from './src/router/odataModel';
 export {
 	ModuleConfig,
 	ConfigModel,
@@ -24,6 +25,7 @@ export {
 	RouteResponse,
 	ResponseDataModel,
 	ResponseErrorModel,
-	AddedResponse
+	AddedResponse,
+	OdataModel
 }
 export default OrigamiTs

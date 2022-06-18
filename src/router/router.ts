@@ -133,7 +133,7 @@ export default class Router
       }
       if(arg.isOdata)
       {
-        dt=new OdataModel(dt) ;
+        dt=new OdataModel(message.data) ;
       }
       if(arg.type)
       {

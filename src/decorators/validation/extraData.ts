@@ -32,6 +32,20 @@ export default class ExtraData{
             }
         }
     }
+    removeByTag(tag:string)
+    {
+        var tags=this.tags[tag];
+        if(tags)
+        {
+            for(var tag of tags)
+            {
+                if(this.parent[tag])
+                {
+                    delete this.parent[tag];
+                }
+            }
+        }
+    }
     SetValiadte(key:string,error:string)
     {  
         var index=this.$oriErrorData.map(p=> p.key).indexOf(key);

@@ -10,17 +10,13 @@ export default class OrigamiTs
 	{
 		this.config=config;
 	}
-	async start(packages:PackageIndex[])
+	async start()
 	{ 
-		for(let pk of packages)
+		for(var config of this.config.packageConfig)
 		{
-			let name=pk.name;
-			var config:ModuleConfig=this.config.packageConfig.filter(p=>p.name==name)[0];
-			if(!config)throw 'Config not found : '+name; 
-			await pk.jsonConfig(config);
-			Router.setInstance(pk);
-			await pk.start();
-		}
-
+			var instance=await config.createInstance();
+			await instance.start();
+			Router.setInstance(instance);
+		}  
 	}
 }

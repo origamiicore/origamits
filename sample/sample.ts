@@ -19,9 +19,7 @@ export default class SampleProject
         console.log('>>model',model.toJSON());
         
         var origamicore = new OrigamiTs(config);
-        await origamicore.start([
-            new SampleIndex()
-        ])
+        await origamicore.start()
         var list:TestModel[]=[
             new TestModel({fname:'fname1',lname:'lname1'}),
             new TestModel({fname:'fname2',lname:'lname2'}),

@@ -1,15 +1,10 @@
 import {ConfigModel,ModuleConfig} from "../"; 
+import SampleConfig from "./module/models/sampleConfig";
 
 export default new ConfigModel({
     packageConfig:[
-        new ModuleConfig({
-            id:'1',
-            type:'module',
-            name:'test',
-            config:{
-                //test config
-                active:true
-            }
+        new SampleConfig({
+            id:'1', 
         })
     ]
 });

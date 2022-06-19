@@ -6,7 +6,7 @@ import Container, { FunctionModel, FunctionOption, ModelContainer, ModelProps, P
 import ModelService from "./modelService";
 import ExtraData from "./validation/extraData";
 import IOriModel from "./validation/iOriModel";
-
+import 'reflect-metadata'
 var container:Container=new Container();
 export  function OdataInput (target: Object, propertyKey: string , parameterIndex: number) { 
     container.addParamData(propertyKey,new ParamModel({
@@ -139,6 +139,10 @@ export function OriProps(fields?: {
   })
 {
     return function(target: Object, propertyKey: string) { 
+        // var t = Reflect.getMetadata("design:type", target, propertyKey);
+        // console.log('-----------------------', target, propertyKey);
+        // console.log('-----------------------', eval(t.name)  );
+        
         if(propertyKey.indexOf('$ori')==0)
         {
             throw 'you can\'t use $ori ';

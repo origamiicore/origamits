@@ -7,6 +7,7 @@ export default class TestModel extends IOriModel
     @OriProps({minLength:5,isRequired:true})
     fname:string;
     lname:string;
+    @OriProps()
     other:Model2;
     constructor(
         fields?: {

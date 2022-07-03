@@ -1,4 +1,4 @@
-import OrigamiTs from "../";
+import OrigamiCore from "../";
 import config from "./config";
 import SampleIndex from "./module";
 import Model2 from "./module/models/model2";
@@ -18,7 +18,7 @@ export default class SampleProject
         model.$oriExtraData.clearByTag('readonly');
         console.log('>>model',model.toJSON());
         
-        var origamicore = new OrigamiTs(config);
+        var origamicore = new OrigamiCore(config);
         await origamicore.start()
         var list:TestModel[]=[
             new TestModel({fname:'fname1',lname:'lname1'}),

@@ -3,7 +3,7 @@ import ModuleConfig from "./models/moduleConfig";
 import PackageIndex from "./models/packageIndex";
 import Router from "./router/router";
 
-export default class OrigamiTs
+export default class OrigamiCore
 {
 	config:ConfigModel;
 	constructor(config:ConfigModel)

@@ -4,7 +4,7 @@
 
 ## Installation
 
-OrigamiTs requires [Node.js](https://nodejs.org/) v14+ to run.
+OrigamiCore requires [Node.js](https://nodejs.org/) v14+ to run.
 
 install OrigamiCore
 ```sh
@@ -30,7 +30,7 @@ oricli --addservice serviceName
 
 ## Plugins
 
-OrigamiTs is currently extended with the following plugins.
+OrigamiCore is currently extended with the following plugins.
 Instructions on how to use them in your own application are linked below.
 
 | Plugin | README |

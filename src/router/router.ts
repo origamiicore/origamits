@@ -12,9 +12,9 @@ import RouteService from "./routeService";
 import UploadService from "./uploadService";
 
 var globalModel:GlobalModels=new GlobalModels();
-if(global.origamits)
+if(global.origamicore)
 {
-  globalModel=global.origamits as GlobalModels ;
+  globalModel=global.origamicore as GlobalModels ;
 } 
 var routes = globalModel.routes; 
 

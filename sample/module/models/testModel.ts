@@ -9,6 +9,10 @@ export default class TestModel extends IOriModel
     lname:string;
     @OriProps()
     other:Model2;
+    @OriProps()
+    isAgent:boolean;
+    @OriProps()
+    age:number;
     constructor(
         fields?: {
             fname?: string,

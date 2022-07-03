@@ -136,13 +136,15 @@ export function OriProps(fields?: {
     ignoreToJson?:boolean
     isRequired?:boolean
     isRequiredError?:string
+    type?:string
   })
 {
     return function(target: Object, propertyKey: string) { 
-        // var t = Reflect.getMetadata("design:type", target, propertyKey);
-        // console.log('-----------------------', target, propertyKey);
-        // console.log('-----------------------', eval(t.name)  );
-        
+        var t = Reflect.getMetadata("design:type", target, propertyKey);
+        console.log('-----------------------', target, propertyKey);
+        console.log('-----------------------', t.name  );
+        if(!fields)fields={};
+        fields.type=t.name;
         if(propertyKey.indexOf('$ori')==0)
         {
             throw 'you can\'t use $ori ';

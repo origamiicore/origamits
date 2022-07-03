@@ -6,26 +6,26 @@
 
 OrigamiTs requires [Node.js](https://nodejs.org/) v14+ to run.
 
-install OrigamiTS
+install OrigamiCore
 ```sh
-npm install origamits
+npm install origamicore@latest
 ```
 
 install CLI
 ```sh
-npm install orits -g
+npm install oricli@latest -g
 ```
 
 ### Create Projects
 
 ```sh
-orits create projectName
+oricli --create projectName
 ```
 
 ### Add Service
 
 ```sh
-orits addservice serviceName
+oricli --addservice serviceName
 ```
 
 ## Plugins

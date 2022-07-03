@@ -78,6 +78,7 @@ export class ModelProps
     maxLength: number   
     ignoreToJson:boolean
     isRequired:boolean 
+    type:string;
     constructor(name:string,fields?: { 
         readOnly?:string
         title?:string
@@ -86,6 +87,7 @@ export class ModelProps
         maxLength?: number   
         ignoreToJson?:boolean
         isRequired?:boolean 
+        type?:string
       })
     {
         this.name=name;

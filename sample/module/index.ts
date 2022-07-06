@@ -19,12 +19,11 @@ class SampleIndex implements PackageIndex
         return;
     }
 
-    @OriService({isInternal:true})
+    @OriService({isInternal:true,})
     async internalService(@DataInput({classType:TestModel}) info:TestModel,addedData)
     {
         console.log('name>',this.name );
-        console.log('info>',JSON.stringify(info) );
-        // console.log('info>',info.$oriToJson() );
+        console.log('info>',JSON.stringify(info) ); 
         console.log('errors>',info.$oriExtraData.isValid());
         console.log('addedData>',addedData);
 

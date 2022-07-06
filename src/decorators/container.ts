@@ -1,3 +1,4 @@
+import { HttpMethod } from "../models/extrnalService";
 import ModelService, { ObjectModel } from "./modelService";
 
 export class ParamModel{
@@ -15,19 +16,25 @@ export class ParamModel{
         if (fields) Object.assign(this, fields);
     }
 }
+// type NewType = HttpMethod;
+
 export class FunctionOption
 {
+    route:string='';
     service:string='';
     isInternal:boolean;
     isPublic:boolean;
     roles: number[] ;
     maxUploadSize:number;
-    public constructor(fields?: { 
-        service?: string, 
-        isInternal?:boolean,
-        isPublic:boolean,
+    method:HttpMethod
+    public constructor(fields?: {  
+        service?: string
+        isInternal?:boolean
+        isPublic:boolean
+        method:HttpMethod
         roles?: number[] 
         maxUploadSize?:number
+        route:string;
       }) {
         if (fields) Object.assign(this, fields);
     }

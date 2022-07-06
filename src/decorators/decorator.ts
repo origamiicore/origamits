@@ -1,5 +1,5 @@
 import ArgModel from "../models/argModel";
-import ExtrnalService from "../models/extrnalService";
+import ExtrnalService, { HttpMethod } from "../models/extrnalService";
 import InternalService from "../models/internalService";
 import Router from "../router/router";
 import Container, { FunctionModel, FunctionOption, ModelContainer, ModelProps, ParamModel } from "./container"; 
@@ -41,12 +41,14 @@ export function DataInput(fields?: {
 
 }
 export function OriService(fields?: {
-    domain?: string,
+   // domain?: string,
+    route?:string;
     service?: string, 
     isInternal?:boolean,
     isPublic?:boolean,
     roles?: number[] 
     maxUploadSize?:number
+    method?:HttpMethod
   }) { 
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {  
         container.setFunction(propertyKey,new FunctionOption(fields as any));         
@@ -106,7 +108,9 @@ export default function OriInjectable(fields: {
                     isPublic:func.option.isPublic,
                     maxUploadSize:func.option.maxUploadSize,
                     roles:func.option.roles, 
-                    args:paramList
+                    args:paramList,
+                    method:func.option.method,
+                    route:func.option.route
                 }))
 
             }
@@ -141,10 +145,12 @@ export function OriProps(fields?: {
 {
     return function(target: Object, propertyKey: string) { 
         var t = Reflect.getMetadata("design:type", target, propertyKey);
-        console.log('-----------------------', target, propertyKey);
-        console.log('-----------------------', t.name  );
+        // console.log('-----------------------', target, propertyKey);
+        // console.log('-----------------------', t?.name  );
+        if(!t)console.log('type warning');
+        
         if(!fields)fields={};
-        fields.type=t.name;
+        fields.type=t?.name;
         if(propertyKey.indexOf('$ori')==0)
         {
             throw 'you can\'t use $ori ';

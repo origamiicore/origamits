@@ -1,5 +1,5 @@
 import { IOriModel } from "../..";
-import ExtrnalService from "../models/extrnalService";
+import ExtrnalService, { HttpMethod } from "../models/extrnalService";
 import GlobalModels from "../models/globalModels";
 import InternalService from "../models/internalService";
 import MessageModel from "../models/messageModel";
@@ -10,12 +10,17 @@ import OdataModel from "./odataModel";
 import RouteErrorMessage from "./routeErrorMessage"; 
 import RouteService from "./routeService";
 import UploadService from "./uploadService";
-
+ 
 var globalModel:GlobalModels=new GlobalModels();
 if(global.origamicore)
 {
   globalModel=global.origamicore as GlobalModels ;
-} 
+}  
+else
+{
+  global.origamicore=globalModel
+}
+
 var routes = globalModel.routes; 
 
 
@@ -109,7 +114,7 @@ export default class Router
       return RouteResponse.failed(exp,exp.message,'')
     }
   }
-  static async runExternal(domain:string ,service:string ,message:MessageModel ):Promise<RouteResponse>
+  static async runExternal(domain:string ,service:string ,message:MessageModel,route:string,httpMethod:string  ):Promise<RouteResponse>
   { 
     
     if(domain==null || !routes[domain])
@@ -122,6 +127,18 @@ export default class Router
     }
     var d=routes[domain] as RouteService;
     var s= d?.externalServices[service] as ExtrnalService;
+
+    var routeData=s.validateRoute(route);
+    if(!routeData) return new RouteResponse({error: RouteErrorMessage.serviceNotExist}); 
+    for(var param in routeData)
+    {
+      message.data[param]=routeData[param];
+    }
+    var method=s.method??globalModel.config.defaultMethod;
+    if(method && method!=HttpMethod.None && method!=httpMethod)
+    {
+      return new RouteResponse({error: RouteErrorMessage.serviceNotExist});
+    }
     if(s==null) return new RouteResponse({error: RouteErrorMessage.serviceNotExist});
     var data:any[]=[];
     for(var arg of s.args)

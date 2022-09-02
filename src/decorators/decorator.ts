@@ -67,6 +67,7 @@ export default function OriInjectable(fields: {
         for(var funcId in container.functions)
         {
             var func= container.functions[funcId] as FunctionModel; 
+            if(!myclass[func.name])continue;
             var fstr=myclass[func.name].toString();
             var start=fstr.indexOf('(')
             var end=fstr.indexOf('\n')

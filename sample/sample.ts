@@ -31,6 +31,9 @@ export default class SampleProject
         
         data=await SampleRoute.RunTestService('','hoss','dd');
         console.log(data);
+
+        data=await SampleRoute.RunTestService1('vahid1xx','hoss','dd');
+        console.log(data);
         
 
     }

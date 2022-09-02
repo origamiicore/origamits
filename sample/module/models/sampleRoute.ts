@@ -10,4 +10,11 @@ export default class SampleRoute
            addedData
         }}))
     }
+    static async RunTestService1(firstName:string,lastName:string,addedData:any)
+    {
+       return await Router.runInternal(this.domain,'internalService1',new MessageModel({data:{
+           info:{fname:firstName,lname:lastName,other:{sex:'test'}},
+           addedData
+        }}))
+    }
 }

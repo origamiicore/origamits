@@ -10,6 +10,7 @@ class SampleIndex implements PackageIndex
         return ;
     }
     start(): Promise<void> {
+        SampleIndex.prototype['internalService1']= SampleIndex1.prototype.internalService1;
         return;
     }
     restart(): Promise<void> {
@@ -37,4 +38,20 @@ class SampleIndex implements PackageIndex
     }
  
 }
+@OriInjectable({domain:'test'})
+class SampleIndex1 
+{ 
+    name:string='test'; 
+    async start(): Promise<void> {
+    } 
+
+    @OriService({isInternal:true,})
+    async internalService1(@DataInput({classType:TestModel}) info:TestModel,addedData)
+    {
+        console.log('internalService1 >',this.name );
+
+    }
+}
+export {SampleIndex1}
 export default SampleIndex
+

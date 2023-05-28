@@ -26,7 +26,7 @@ export default class SampleProject
         ];
         console.log('>>',JSON.parse(JSON.stringify(list)) );
         
-        var data=await SampleRoute.RunTestService('vahid1xx','hoss','dd');
+        var data=await SampleRoute.RunTestService('vahid1xx','hoss',[{xx:'dd'},{xx:'dd'}]);
         console.log(data);
         
         data=await SampleRoute.RunTestService('','hoss','dd');

@@ -79,25 +79,40 @@ export default class Router
     if(s==null) return new RouteResponse({error: RouteErrorMessage.serviceNotExist});
     var data:any[]=[];
     for(var arg of s.args)
-    {
+    { 
       var dt=message.data[arg.name]; 
       if(arg.isSession)
       {
         dt=message.session;
       }
-      if(arg.type)
+      if(arg.type || arg.basicType)
       {
-        
-        dt=new (arg.type)(dt); 
-        if(dt instanceof IOriModel)
-        { 
-          var validate=  dt.$oriExtraData.isValid();  
-          if(validate!==true)
-          {
-            return RouteResponse.failed({error:validate,name:arg.name},'parameter validation',RouteErrorMessage.validationError)
-          }
+        if(arg.isArray)
+        {
+          console.log(arg);
+          if(!Array.isArray(dt))return RouteResponse.failed({error:validate,name:arg.name},'parameter validation',RouteErrorMessage.validationError)
+          let arr= []
+          if(arg.type) arr=dt.map(a=>new (arg.type)(a)) ; 
+          else arr=dt.map(a=>  (arg.basicType)(a));
           
+          dt=arr;
         }
+        else
+        {
+          
+          if(arg.type) dt=new (arg.type)(dt); 
+          else dt=(arg.basicType)(dt); 
+          if(dt instanceof IOriModel)
+          { 
+            var validate=  dt.$oriExtraData.isValid();  
+            if(validate!==true)
+            {
+              return RouteResponse.failed({error:validate,name:arg.name},'parameter validation',RouteErrorMessage.validationError)
+            }
+            
+          }
+        }
+        
       }
       data.push(dt);
 
@@ -143,6 +158,7 @@ export default class Router
     var data:any[]=[];
     for(var arg of s.args)
     {
+      
       var dt=message.data[arg.name]; 
       if(arg.isSession)
       {
@@ -152,17 +168,30 @@ export default class Router
       {
         dt=new OdataModel(message.data) ;
       }
-      if(arg.type)
-      {
-        dt=new (arg.type)(dt); 
-        if(dt instanceof IOriModel)
-        { 
-          var validate=  dt.$oriExtraData.isValid();
-          if(validate!==true)
-          {
-            return RouteResponse.failed({error:validate,name:arg.name},'parameter validation',RouteErrorMessage.validationError)
-          }
+      if(arg.type || arg.basicType)
+      { 
+        if(arg.isArray)
+        {
+          if(!Array.isArray(dt))return RouteResponse.failed({error:validate,name:arg.name},'parameter validation',RouteErrorMessage.validationError)
+          let arr= []
+          if(arg.type) arr=dt.map(a=>new (arg.type)(a)) ; 
+          else arr=dt.map(a=>  (arg.basicType)(a));
           
+          dt=arr;
+        }
+        else
+        {
+          if(arg.type) dt=new (arg.type)(dt); 
+          else dt=(arg.basicType)(dt); 
+          if(dt instanceof IOriModel)
+          { 
+            var validate=  dt.$oriExtraData.isValid();
+            if(validate!==true)
+            {
+              return RouteResponse.failed({error:validate,name:arg.name},'parameter validation',RouteErrorMessage.validationError)
+            }
+            
+          }
         }
       }
       data.push(dt);

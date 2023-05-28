@@ -6,12 +6,16 @@ export class ParamModel{
     type:'session'|'input'|'odata';
     isRequired:boolean;
     classType:any=null;
+    basicType:any=null;
+    isArray:boolean=false;
     public constructor(
         fields?: { 
           index?: number
           type?:'session'|'input'|'odata'
           isRequired?: boolean
           classType?:any
+          basicType?:any
+          isArray?:boolean
         }) {
         if (fields) Object.assign(this, fields);
     }
@@ -51,7 +55,7 @@ export class FunctionModel{
 
     addParamData( param:ParamModel)
     { 
-        if(!this.params[param.index])this.params[param.index]=param;
+        if(!this.params.has(param.index)  )this.params.set(param.index,param)   ;
     }
     setOption( option:FunctionOption)
     {

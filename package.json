@@ -1,13 +1,13 @@
 {
   "name": "origamicore",
-  "version": "3.1.3",
+  "version": "3.1.8",
   "description": "",
   "main": "dist/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+  "scripts": { 
     "build": "npx tsc",
     "publish": "npm publish",
-    "run-sample": "node ./dist/sample/sample.js"
+    "run-sample": "node ./dist/sample/sample.js",
+    "build and run ": "npx tsc & node ./dist/sample/sample.js"
   },
   "keywords": ["typescript" ,"origamicore","framework"],
   "author": "",

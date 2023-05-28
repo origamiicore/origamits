@@ -21,9 +21,10 @@ class SampleIndex implements PackageIndex
     }
 
     @OriService({isInternal:true,})
-    async internalService(@DataInput({classType:TestModel}) info:TestModel,addedData)
+    async internalService( info:TestModel,@DataInput({basicType:String,isArray:true}) addedData?:string[])
     {
         console.log('name>',this.name );
+        console.log('info>',info); 
         console.log('info>',JSON.stringify(info) ); 
         console.log('errors>',info.$oriExtraData.isValid());
         console.log('addedData>',addedData);

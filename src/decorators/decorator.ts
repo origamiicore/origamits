@@ -7,6 +7,20 @@ import ModelService from "./modelService";
 import ExtraData from "./validation/extraData";
 import IOriModel from "./validation/iOriModel";
 import 'reflect-metadata'
+
+
+var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
+var ARGUMENT_NAMES = /([^\s,]+)/g;
+function getParamNames(func) {
+  var fnStr = func.toString().replace(STRIP_COMMENTS, '');
+  var result = fnStr.slice(fnStr.indexOf('(')+1, fnStr.indexOf(')')).match(ARGUMENT_NAMES);
+  if(result === null)
+     result = [];
+  return result;
+}
+
+
+
 var container:Container=new Container();
 export  function OdataInput (target: Object, propertyKey: string , parameterIndex: number) { 
     container.addParamData(propertyKey,new ParamModel({
@@ -24,10 +38,12 @@ export  function SessionInput (target: Object, propertyKey: string , parameterIn
 export function DataInput(fields?: { 
     service?: string,  
     isRequired?:boolean
+    isArray?:boolean
     classType?:any
+    basicType?:any
   })
 {
-    return function (target: Object, propertyKey: string, parameterIndex: number) {
+    return function (target: Object, propertyKey: string, parameterIndex: number) { 
         var func:any=target[propertyKey] as Function;
         type types = Parameters<typeof func>;
         var a={} 
@@ -35,7 +51,9 @@ export function DataInput(fields?: {
             index:parameterIndex,
             type:'input',
             isRequired:fields?.isRequired,
-            classType:fields?.classType
+            classType:fields?.classType,
+            basicType:fields?.basicType,
+            isArray:fields?.basicType,
         }))
     }
 
@@ -51,6 +69,46 @@ export function OriService(fields?: {
     method?:HttpMethod
   }) { 
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {  
+ 
+        const paramTypes = Reflect.getMetadata('design:paramtypes', target, propertyKey)
+        if(paramTypes)
+        {
+            var s = paramTypes.map(a => a) ;  
+            let functionParameters= getParamNames(target[propertyKey] );
+            for(let index=0;index< functionParameters.length;index++)
+            {
+                let name=functionParameters[index]
+                let paramTypeName=s[index].name;
+                
+                let basicType:any;
+                let manualType:any; 
+                if(paramTypeName=='Array'||paramTypeName=='Object')
+                {
+                    //TODO
+                }
+                else if(paramTypeName=='Number' || paramTypeName=='Boolean'|| paramTypeName=='String'|| paramTypeName=='Date')
+                {
+                    basicType=s[index];  
+                } 
+                else  
+                {
+                    manualType=s[index]
+                }
+                
+                container.addParamData(propertyKey,new ParamModel({
+                    index:index,
+                    type:'input',
+                    //isRequired:fields?.isRequired,
+                    classType:manualType,
+                    basicType
+                })) 
+            }
+
+        }
+        else
+        {
+            console.log('Service Type Warning');
+        }
         container.setFunction(propertyKey,new FunctionOption(fields as any));         
     };
 }
@@ -83,14 +141,15 @@ export default function OriInjectable(fields: {
             for(var param of params)
             {
                 paramList.push(new ArgModel({name:param.trim()}))
-            }
-            for(var fparam in func.params)
-            {
-                let pmodel=func.params[fparam] as ParamModel;
+            } 
+            func.params.forEach((pmodel:ParamModel,fparam:number)=>{
+ 
                 if(pmodel.type=='session')paramList[pmodel.index].isSession=true;
                 if(pmodel.type=='odata')paramList[pmodel.index].isOdata=true;
                 if(pmodel.classType)paramList[pmodel.index].type= pmodel.classType ; 
-            }
+                if(pmodel.basicType)paramList[pmodel.index].basicType= pmodel.basicType ; 
+                if(pmodel.isArray)paramList[pmodel.index].isArray= pmodel.isArray ; 
+            }) 
             if(func.option.isInternal)
             {
                 var service=func.name;

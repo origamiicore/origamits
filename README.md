@@ -39,4 +39,5 @@ Instructions on how to use them in your own application are linked below.
 | MongoDb | [https://www.npmjs.com/package/tsorimongo] | 
 | Redis | [https://www.npmjs.com/package/tsoriredis] | 
 | Captcha | [https://www.npmjs.com/package/tsoricaptcha] | 
+| EOSIO Hyperion | [https://www.npmjs.com/package/tsorihyperion] | 
 
